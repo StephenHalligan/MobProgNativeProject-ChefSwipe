@@ -5,9 +5,10 @@
       <map>
         <entry key="app/src/main/res/layout/activity_choose_login_or_register.xml" value="0.25" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.12360688956433637" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.2733518011688459" />
         <entry key="app/src/main/res/layout/item.xml" value="0.1" />
+        <entry key="app/src/main/res/menu/menu.xml" value="0.1" />
       </map>
     </option>
   </component>

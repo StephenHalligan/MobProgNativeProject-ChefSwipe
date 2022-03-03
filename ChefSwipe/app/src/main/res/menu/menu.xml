@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/ic_mainpage"
+        android:icon="@drawable/mainpage"
+        android:title="Recipes"/>
+    <item
+        android:id="@+id/ic_newspage"
+        android:icon="@drawable/newspage"
+        android:title="Feed"/>
+    <item
+        android:id="@+id/ic_logoutpage"
+        android:icon="@drawable/logoutpage"
+        android:title="Logout"/>
+
+</menu>
