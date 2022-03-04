@@ -26,18 +26,19 @@ class LoginActivity : AppCompatActivity() {
     private var mAuth: FirebaseAuth? = null
     private var firebaseAuthStateListener: AuthStateListener? = null
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         mAuth = FirebaseAuth.getInstance()
         firebaseAuthStateListener = AuthStateListener {
             val user = FirebaseAuth.getInstance().currentUser
             //Check if user is logged in
-            if (user != null) {
+            /*if (user != null) {
                 val intent = Intent(this@LoginActivity, MainActivity::class.java)
                 startActivity(intent)
                 finish()
                 return@AuthStateListener
-            }
+            }*/
         }
         mLogin = findViewById<View>(R.id.Login) as Button
         mEmail = findViewById<View>(R.id.Email) as EditText
@@ -52,6 +53,10 @@ class LoginActivity : AppCompatActivity() {
                     if (!task.isSuccessful) {
                         Toast.makeText(this@LoginActivity, "Sign-in Error", Toast.LENGTH_SHORT)
                             .show()
+                    }
+                    else {
+                        val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                        startActivity(intent)
                     }
                 }
         }

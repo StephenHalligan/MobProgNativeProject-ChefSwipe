@@ -1,29 +1,39 @@
 package com.example.chefswipe
 
+import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
-import com.example.chefswipe.Cards
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuth.AuthStateListener
-import com.example.chefswipe.arrayAdapter
 import com.google.firebase.firestore.FirebaseFirestore
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.ListView
-import com.example.chefswipe.R
 import com.lorentzos.flingswipe.SwipeFlingAdapterView
 import com.lorentzos.flingswipe.SwipeFlingAdapterView.onFlingListener
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import java.util.ArrayList
 
+import com.example.chefswipe.fragments.HomepageFragment
+import com.example.chefswipe.fragments.LogoutpageFragment
+import com.example.chefswipe.fragments.NewspageFragment
+import com.google.android.material.bottomnavigation.BottomNavigationView
+
 //Implement onFlingListener
 class MainActivity : AppCompatActivity() {
+
     private val cards_data: Array<Cards>
         get() {
             TODO()
         }
+
+    //Vars for fragments
+    private val homepageFragment = HomepageFragment()
+    private val newspageFragment = NewspageFragment()
+    private val logoutpageFragment = LogoutpageFragment()
+
     private val mAuth: FirebaseAuth? = null
     private val firebaseAuthStateListener: AuthStateListener? = null
 
@@ -37,6 +47,8 @@ class MainActivity : AppCompatActivity() {
     var rowItems: MutableList<Cards>? = null
     var recipeList = ArrayList<Int>()
     var recipeSaved = ArrayList<String>()
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -44,6 +56,7 @@ class MainActivity : AppCompatActivity() {
 
         //Create arraylist from Cards
         rowItems = ArrayList()
+
 
         //Choose adapter
         arrayAdapter = arrayAdapter(this, R.layout.item, rowItems)
@@ -72,18 +85,46 @@ class MainActivity : AppCompatActivity() {
             override fun onLeftCardExit(dataObject: Any) {}
 
             //Called when card is swiped to right
-            override fun onRightCardExit(dataObject: Any) {}
+            override fun onRightCardExit(dataObject: Any) {
+                val docRef = db.collection("Sweet Treats").document(Integer.toString(recipeIndex-1))
+                docRef.get().addOnCompleteListener { task: Task<DocumentSnapshot> ->
+                    if (task.isSuccessful) {
+                        val document = task.result
+                        recipeIndex++
+                        if (document.exists()) {
+                            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(document.getString("Link")))
+                            startActivity(browserIntent)
+                        }
+                    }
+                }
+            }
+
             override fun onScroll(v: Float) {}
         })
 
         //OnItemClickListener
         flingContainer.setOnItemClickListener { itemPosition: Int, dataObject: Any? -> }
+
+        //Checks if buttons on nav bar have been clicked
+        findViewById<BottomNavigationView>(R.id.bottom_navigation)
+            .setOnNavigationItemSelectedListener {
+            when(it.itemId) {
+                //Commented out as we are already on mainpage
+                    // R.id.ic_mainpage -> intent = Intent(this@MainActivity, MainActivity::class.java)
+                R.id.ic_newspage ->  intent = Intent(this@MainActivity, MainActivity::class.java)
+                R.id.ic_logoutpage -> intent = Intent(this@MainActivity, LoginActivity::class.java)
+            }
+                startActivity(intent)
+                true
+        }
     }
+
 
     //Function can be called to update array adapter
     fun updateArrayAdapter() {
         arrayAdapter!!.notifyDataSetChanged()
     }
+
 
     //Called retrieve recipe from Firebase database
     val recipe: Unit
@@ -102,6 +143,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
+
 
     companion object {
         private const val TAG = "Chef Swipe"
