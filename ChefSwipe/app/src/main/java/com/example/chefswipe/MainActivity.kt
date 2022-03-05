@@ -21,6 +21,7 @@ import com.example.chefswipe.fragments.LogoutpageFragment
 import com.example.chefswipe.fragments.NewspageFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
+
 //Implement onFlingListener
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +29,8 @@ class MainActivity : AppCompatActivity() {
         get() {
             TODO()
         }
+
+    var recipeIndexCounter = -1
 
     //Vars for fragments
     private val homepageFragment = HomepageFragment()
@@ -67,12 +70,6 @@ class MainActivity : AppCompatActivity() {
 
         //Toast.makeText(MainActivity.this, "Left!", Toast.LENGTH_SHORT).show();
         flingContainer.setFlingListener(object : onFlingListener {
-            override fun removeFirstObjectInAdapter() {
-                //Delete an object from the Adapter (/AdapterView)
-                (rowItems as ArrayList<Cards>).removeAt(0)
-                Log.d("LIST", "removed object!")
-                updateArrayAdapter()
-            }
 
             //Called when adapter is almost empty
             override fun onAdapterAboutToEmpty(itemsInAdapter: Int) {
@@ -86,17 +83,27 @@ class MainActivity : AppCompatActivity() {
 
             //Called when card is swiped to right
             override fun onRightCardExit(dataObject: Any) {
-                val docRef = db.collection("Sweet Treats").document(Integer.toString(recipeIndex-1))
+                val docRef = db.collection("Sweet Treats").document(Integer.toString(recipeIndexCounter))
                 docRef.get().addOnCompleteListener { task: Task<DocumentSnapshot> ->
                     if (task.isSuccessful) {
                         val document = task.result
-                        recipeIndex++
                         if (document.exists()) {
-                            val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(document.getString("Link")))
+                            var browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(document.getString("Link")))
                             startActivity(browserIntent)
+                            updateArrayAdapter()
                         }
                     }
                 }
+
+            }
+
+
+            override fun removeFirstObjectInAdapter() {
+                recipeIndexCounter++
+                //Delete an object from the Adapter (/AdapterView)
+                (rowItems as ArrayList<Cards>).removeAt(0)
+                Log.d("LIST", "removed object!")
+                updateArrayAdapter()
             }
 
             override fun onScroll(v: Float) {}
