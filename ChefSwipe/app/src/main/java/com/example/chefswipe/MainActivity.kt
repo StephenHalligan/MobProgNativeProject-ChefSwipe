@@ -117,8 +117,8 @@ class MainActivity : AppCompatActivity() {
             .setOnNavigationItemSelectedListener {
             when(it.itemId) {
                 //Commented out as we are already on mainpage
-                    // R.id.ic_mainpage -> intent = Intent(this@MainActivity, MainActivity::class.java)
-                R.id.ic_newspage ->  intent = Intent(this@MainActivity, MainActivity::class.java)
+                    R.id.ic_mainpage -> intent = Intent(this@MainActivity, MainActivity::class.java)
+                R.id.ic_newspage ->  intent = Intent(this@MainActivity, NewsActivity::class.java)
                 R.id.ic_logoutpage -> intent = Intent(this@MainActivity, LoginActivity::class.java)
             }
                 startActivity(intent)
