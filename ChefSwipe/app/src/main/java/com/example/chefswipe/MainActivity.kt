@@ -9,33 +9,19 @@ import com.google.firebase.firestore.FirebaseFirestore
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.widget.ListView
+import android.widget.Toast
 import com.lorentzos.flingswipe.SwipeFlingAdapterView
 import com.lorentzos.flingswipe.SwipeFlingAdapterView.onFlingListener
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentSnapshot
 import java.util.ArrayList
-
-import com.example.chefswipe.fragments.HomepageFragment
-import com.example.chefswipe.fragments.LogoutpageFragment
-import com.example.chefswipe.fragments.NewspageFragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 
 //Implement onFlingListener
 class MainActivity : AppCompatActivity() {
 
-    private val cards_data: Array<Cards>
-        get() {
-            TODO()
-        }
-
     var recipeIndexCounter = -1
-
-    //Vars for fragments
-    private val homepageFragment = HomepageFragment()
-    private val newspageFragment = NewspageFragment()
-    private val logoutpageFragment = LogoutpageFragment()
 
     private val mAuth: FirebaseAuth? = null
     private val firebaseAuthStateListener: AuthStateListener? = null
@@ -46,10 +32,7 @@ class MainActivity : AppCompatActivity() {
     //Need to initialize index on registration **IMPORTANT**
     private var recipeIndex = 0
     private var db = FirebaseFirestore.getInstance()
-    var listView: ListView? = null
     var rowItems: MutableList<Cards>? = null
-    var recipeList = ArrayList<Int>()
-    var recipeSaved = ArrayList<String>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -67,6 +50,12 @@ class MainActivity : AppCompatActivity() {
         //set the listener and the adapter
         flingContainer.adapter = arrayAdapter
         updateArrayAdapter()
+
+        Toast.makeText(
+            this@MainActivity,
+            "Swipe left to pass & swipe right to view recipe",
+            Toast.LENGTH_SHORT
+        )
 
         //Toast.makeText(MainActivity.this, "Left!", Toast.LENGTH_SHORT).show();
         flingContainer.setFlingListener(object : onFlingListener {
@@ -116,9 +105,8 @@ class MainActivity : AppCompatActivity() {
         findViewById<BottomNavigationView>(R.id.bottom_navigation)
             .setOnNavigationItemSelectedListener {
             when(it.itemId) {
-                //Commented out as we are already on mainpage
-                    R.id.ic_mainpage -> intent = Intent(this@MainActivity, MainActivity::class.java)
-                R.id.ic_newspage ->  intent = Intent(this@MainActivity, NewsActivity::class.java)
+                //R.id.ic_mainpage -> intent = Intent(this@MainActivity, MainActivity::class.java)
+                R.id.ic_newspage ->  intent = Intent(this@MainActivity, ProfileActivity::class.java)
                 R.id.ic_logoutpage -> intent = Intent(this@MainActivity, LoginActivity::class.java)
             }
                 startActivity(intent)

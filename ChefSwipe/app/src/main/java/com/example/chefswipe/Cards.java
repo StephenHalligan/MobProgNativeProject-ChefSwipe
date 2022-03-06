@@ -21,8 +21,5 @@ public class Cards {
     public String getRecipeName() {
         return recipeName;
     }
-    public void setRecipeName(String recipeName) {
-        this.recipeName = recipeName;
-    }
 
 }

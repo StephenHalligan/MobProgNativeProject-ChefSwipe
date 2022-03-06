@@ -9,9 +9,11 @@
         <entry key="app/src/main/res/drawable/newspage.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_add_note.xml" value="0.12545289855072464" />
         <entry key="app/src/main/res/layout/activity_choose_login_or_register.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/activity_feed.xml" value="0.1118659420289855" />
         <entry key="app/src/main/res/layout/activity_list.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/activity_profile.xml" value="0.1118659420289855" />
         <entry key="app/src/main/res/layout/activity_register.xml" value="0.2733518011688459" />
         <entry key="app/src/main/res/layout/cell_cards.xml" value="0.12545289855072464" />
         <entry key="app/src/main/res/layout/fragment_homepage.xml" value="0.1" />
