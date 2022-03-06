@@ -11,4 +11,4 @@ The application implements firebase to authenticate users in the registration an
 
 The navigation bar can be used to switch between the pages; allowing the user to view recipe cards, edit profile settings like email or password, or logout of the app.
 
-I used firestore to host all of the recipes, from their name to the link to their instructions. Screenshots of this can be found [here](https://imgur.com/a/ZkfleGu)
+I used firestore to host all of the recipes, from their name to the link to their instructions. The main activity uses loops to check if the "card stack" of recipes is nearly empty, and if it is, it iterates through the firestore database using indexes to retrieve new recipes; adding them an array. This array then showcases each element or recipe as it's own card. Screenshots of this can be found [here](https://imgur.com/a/ZkfleGu)
